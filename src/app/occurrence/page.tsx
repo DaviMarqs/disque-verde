@@ -20,10 +20,10 @@ import { CameraIcon } from "lucide-react";
 
 export default function Occurrence() {
   const options = [
-    { value: "burned", label: "Queimada" },
-    { value: "trash", label: "Lixo em lugar inapropriado" },
-    { value: "vandalism", label: "Vandalismo Ambiental" },
-    { value: "invasion", label: "Invasão" },
+    { value: "BURNED", label: "Queimada" },
+    { value: "TRASH", label: "Lixo em lugar inapropriado" },
+    { value: "VANDALISM", label: "Vandalismo Ambiental" },
+    { value: "INVASION", label: "Invasão" },
   ];
 
   return (

@@ -33,22 +33,22 @@ const fakeData: Occurrence[] = [
   {
     id: "1",
     description: "Queimada no centro da cidade",
-    occurrence_type: "burned",
+    occurrence_type: "BURNED",
     image:
       "https://unsplash.com/pt-br/fotografias/fogo-com-fumaca-preta-durante-a-noite-gyrrWzwqm5Y",
     created_at: "2022-01-01T00:00:00.000Z",
     updated_at: "2022-01-01T00:00:00.000Z",
-    status: "pending",
+    status: "PENDING",
   },
   {
     id: "2",
     description: "Lixo na rua",
-    occurrence_type: "trash",
+    occurrence_type: "TRASH",
     image:
       "https://unsplash.com/pt-br/fotografias/fogo-com-fumaca-preta-durante-a-noite-gyrrWzwqm5Y",
     created_at: "2023-01-01T00:00:00.000Z",
     updated_at: "2023-01-01T00:00:00.000Z",
-    status: "concluded",
+    status: "CONCLUDED",
   },
 ];
 

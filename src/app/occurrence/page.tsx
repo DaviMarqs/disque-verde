@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CameraIcon } from "lucide-react";
@@ -45,9 +45,9 @@ export default function Occurrence() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="ocurrencie_type">Tipo de Denúncia</Label>
+                <Label htmlFor="occurrence_type">Tipo de Denúncia</Label>
                 <Select>
-                  <SelectTrigger id="ocurrencie_type">
+                  <SelectTrigger id="occurrence_type">
                     <SelectValue placeholder="Selecione" />
                   </SelectTrigger>
                   <SelectContent position="popper">

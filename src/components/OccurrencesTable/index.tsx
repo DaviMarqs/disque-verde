@@ -1,27 +1,28 @@
 "use client";
 
-import { FolderOpen } from "lucide-react";
+import { format } from "date-fns";
+import { Check, Clock, FolderOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationNext,
-    PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
 } from "../ui/pagination";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "../ui/table";
 
 interface Occurrence {
   id: string;
-  description?: string;
+  description: string;
   occurrence_type?: string;
   image?: string;
   created_at: string;
@@ -67,6 +68,17 @@ export default function OccurrencesTable() {
     }
   };
 
+  const formatStatus = (status: string) => {
+    switch (status) {
+      case "PENDING":
+        return <Clock color="orange" className="ml-2" />;
+      case "CONCLUDED":
+        return <Check color="green" className="ml-2"/>;
+      default:
+        return status;
+    }
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -84,15 +96,23 @@ export default function OccurrencesTable() {
         </TableHeader>
         <TableBody>
           {data.map((item) => {
+            const limitedDescription =
+              item?.description.length > 20
+                ? `${item?.description.slice(0, 20)}...`
+                : item.description;
             return (
               <>
                 <TableRow>
                   <TableCell className="text-left">{item.id}</TableCell>
                   <TableCell className="text-left">
-                    {item.description}
+                    {limitedDescription}
                   </TableCell>
-                  <TableCell className="text-left">{item.status}</TableCell>
-                  <TableCell className="text-left">{item.created_at}</TableCell>
+                  <TableCell className="text-center">
+                    {formatStatus(item.status)}
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {format(new Date(item.created_at), "dd/MM/yyyy HH:mm")}
+                  </TableCell>
                   <TableCell className="text-right">
                     <Button variant="outline">
                       <FolderOpen />

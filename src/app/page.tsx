@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,9 +20,11 @@ export default function Home() {
           <span className="font-bold italic mr-2">DISQUE</span> VERDE
         </p>
 
-        <Button className="w-full bg-slate-100 text-slate-900 hover:bg-green-800 hover:text-slate-100 hover:shadow hover:animate-pulse">
-          Faça sua denúncia aqui!
-        </Button>
+        <Link href="/occurrence">
+          <Button className="w-full bg-slate-100 text-slate-900 hover:bg-green-800 hover:text-slate-100 hover:shadow hover:animate-pulse">
+            Faça sua denúncia aqui!
+          </Button>
+        </Link>
       </div>
     </main>
   );

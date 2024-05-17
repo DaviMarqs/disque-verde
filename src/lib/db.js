@@ -1,32 +1,39 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-if (!global.mongoose) {
-  global.mongoose = { conn: null, promise: null };
+const MONGODB_URI = process.env.NEXT_MONGODB_URI;
+
+if (!MONGODB_URI) {
+  throw new Error(
+    "Please define the NEXT_MONGODB_URI environment variable inside .env"
+  );
 }
 
-export async function dbConnect() {
-  if (global.mongoose.conn) {
-    console.log("🚀 ~ DB Already Connected");
-    return global.mongoose.conn;
-  } else {
-    const connString = process.env.NEXT_MONGODB_URI;
+let cached = global.mongoose;
 
-    if (!connString) {
-      throw new Error('Please define the NEXT_MONGODB_URI environment variable inside .env');
-    }
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
-    if (!global.mongoose.promise) {
-      global.mongoose.promise = mongoose.connect(connString, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 5000,
-      }).then(mongoose => {
-        return mongoose;
-      });
-    }
-    
-    global.mongoose.conn = await global.mongoose.promise;
-    console.log("🚀 ~ DB Connected");
-    return global.mongoose.conn;
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
   }
+
+  if (!cached.promise) {
+    const opts = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+
+  cached.conn = await cached.promise;
+  console.log("Connected to MongoDB");
+  return cached.conn;
 }
+
+export default dbConnect;

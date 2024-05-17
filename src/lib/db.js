@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-global.mongoose = {
-  conn: null,
-  promise: null,
-};
+if (!global.mongoose) {
+  global.mongoose = { conn: null, promise: null };
+}
 
 export async function dbConnect() {
   if (global.mongoose.conn) {
@@ -12,16 +11,22 @@ export async function dbConnect() {
   } else {
     const connString = process.env.NEXT_MONGODB_URI;
 
-    const promise = mongoose.connect(connString, {
-      autoIndex: true,
-    });
+    if (!connString) {
+      throw new Error('Please define the NEXT_MONGODB_URI environment variable inside .env');
+    }
 
-    global.mongoose = {
-      conn: await promise,
-      promise,
-    };
-
+    if (!global.mongoose.promise) {
+      global.mongoose.promise = mongoose.connect(connString, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000,
+      }).then(mongoose => {
+        return mongoose;
+      });
+    }
+    
+    global.mongoose.conn = await global.mongoose.promise;
     console.log("🚀 ~ DB Connected");
-    return await promise;
+    return global.mongoose.conn;
   }
 }

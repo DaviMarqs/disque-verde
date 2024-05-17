@@ -2,6 +2,10 @@ import dbConnect from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await dbConnect();
-  return NextResponse.json({ message: "Server is Running!" });
+  try {
+    await dbConnect();
+    return NextResponse.json({ message: "Server is Running!" });
+  } catch (error) {
+    console.log(error, "Error when connecting to the database.");
+  }
 }

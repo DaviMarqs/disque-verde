@@ -7,5 +7,9 @@ export async function GET() {
     return NextResponse.json({ message: "Server is Running!" });
   } catch (error) {
     console.log(error, "Error when connecting to the database.");
+    return NextResponse.json({
+      message: "Error when connecting to the database.",
+      error,
+    });
   }
 }

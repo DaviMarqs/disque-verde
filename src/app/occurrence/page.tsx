@@ -109,7 +109,9 @@ export default function Occurrence() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancelar</Button>
+          <Button variant="outline" onClick={() => setImageSelected("")}>
+            Cancelar
+          </Button>
           <Button disabled={isImageLoading}>Enviar</Button>
         </CardFooter>
         {imageSelected && (

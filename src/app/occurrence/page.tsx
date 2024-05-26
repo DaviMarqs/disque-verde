@@ -73,7 +73,7 @@ export default function Occurrence() {
 
   return (
     <div className="flex min-h-screen justify-center items-center bg-green-700">
-      <Card className="w-3/4">
+      <Card className="w-5/6">
         <CardHeader>
           <CardTitle>Criar Denúncia</CardTitle>
         </CardHeader>
@@ -157,7 +157,7 @@ export default function Occurrence() {
                         htmlFor="option-one"
                         onClick={() => setIsAnonymous(false)}
                       >
-                        Não
+                        Sim
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -166,7 +166,7 @@ export default function Occurrence() {
                         htmlFor="option-two"
                         onClick={() => setIsAnonymous(true)}
                       >
-                        Sim
+                        Não
                       </Label>
                     </div>
                   </RadioGroup>

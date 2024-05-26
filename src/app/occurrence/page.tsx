@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { CameraIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -34,6 +35,7 @@ export default function Occurrence() {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [isAnonymous, setIsAnonymous] = useState(true);
+  const { toast } = useToast()
 
   function convertToBase64(file: Blob): Promise<string | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
@@ -167,7 +169,10 @@ export default function Occurrence() {
             <Button onClick={handleNextStep}>Próximo</Button>
           )}
           {step === 2 && (
-            <Button disabled={isImageLoading}>Enviar</Button>
+            <Button disabled={isImageLoading} onClick={() => toast({
+              title: "Enviado!",
+              description: "Sua denúncia foi enviada com sucesso!",
+            })}>Enviar</Button>
           )}
         </CardFooter>
         {imageSelected && (

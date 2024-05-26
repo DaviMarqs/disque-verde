@@ -2,7 +2,7 @@ import Occurrence from "@/app/models/Occurrence";
 import dbConnect from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(req, { params }) {
+export async function GET(req: Request, { params }) {
   try {
     await dbConnect();
     const { _id } = params;
@@ -26,7 +26,7 @@ export async function GET(req, { params }) {
   }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req: Request, { params }) {
   try {
     await dbConnect();
     const { _id } = params;

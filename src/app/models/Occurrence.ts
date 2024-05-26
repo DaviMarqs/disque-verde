@@ -34,18 +34,6 @@ const OccurrenceSchema = new mongoose.Schema(
     informer_anonymous: {
       type: Boolean,
     },
-    offender_name: {
-      type: String,
-    },
-    offender_email: {
-      type: String,
-    },
-    offender_phone: {
-      type: String,
-    },
-    offender_address: {
-      type: String,
-    },
     occurrence_date_and_time: {
       type: String,
     },

@@ -34,7 +34,10 @@ const OccurrenceSchema = new mongoose.Schema(
     informer_anonymous: {
       type: Boolean,
     },
-    occurrence_date_and_time: {
+    occurrence_date: {
+      type: Date,
+    },
+    occurrence_time:{
       type: String,
     },
     occurrence_location: {

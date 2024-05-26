@@ -1,5 +1,6 @@
 "use client";
 
+import { DatePicker } from "@/components/Datepicker";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -36,7 +38,7 @@ export default function Occurrence() {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   function convertToBase64(file: Blob): Promise<string | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
@@ -84,7 +86,7 @@ export default function Occurrence() {
                   <Textarea
                     id="description"
                     rows={4}
-                    placeholder="Descreva a sua denúncia aqui. Pode colocar horário, localização, e muito mais. Caso seja necessário, envie uma foto logo abaixo!"
+                    placeholder="Para nos ajudar a entender melhor a situação, por favor, forneça uma descrição detalhada do ocorrido. Inclua o máximo de informações possível."
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
@@ -101,6 +103,23 @@ export default function Occurrence() {
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="flex flex-col space-y-2.5 md:flex-row md:items-center justify-between">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="occurrence_date">Data da ocorrência</Label>
+                    <DatePicker />
+                  </div>
+
+                  <div className="flex flex-col space-y-1.5 w-[280px]">
+                    <Label htmlFor="occurrence_time">
+                      Horário da ocorrência
+                    </Label>
+                    <Input
+                      id="occurrence_time"
+                      placeholder="Digite o horário da ocorrência"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col space-y-1.5">
@@ -121,13 +140,36 @@ export default function Occurrence() {
                     />
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
+
+                <div className="flex flex-col space-x-2 gap-2">
+                  <Label htmlFor="anonymous">
+                    Você deseja se identificar ao realizar esta denúncia?
+                  </Label>
+
+                  <RadioGroup
                     id="anonymous"
-                    checked={isAnonymous}
-                    onCheckedChange={() => setIsAnonymous(!isAnonymous)}
-                  />
-                  <Label htmlFor="anonymous">Denúncia anônima</Label>
+                    defaultValue="option-one"
+                    className="flex"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="option-one" id="option-one" />
+                      <Label
+                        htmlFor="option-one"
+                        onClick={() => setIsAnonymous(false)}
+                      >
+                        Não
+                      </Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="option-two" id="option-two" />
+                      <Label
+                        htmlFor="option-two"
+                        onClick={() => setIsAnonymous(true)}
+                      >
+                        Sim
+                      </Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               </div>
             )}
@@ -136,7 +178,10 @@ export default function Occurrence() {
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="full_name">Nome completo</Label>
-                  <Input id="full_name" placeholder="Digite seu nome completo" />
+                  <Input
+                    id="full_name"
+                    placeholder="Digite seu nome completo"
+                  />
                 </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="address">Endereço</Label>
@@ -154,8 +199,52 @@ export default function Occurrence() {
             )}
 
             {step === 2 && isAnonymous && (
-              <div className="flex justify-center items-center">
-                <p className="text-center">Sua denúncia será enviada anonimamente.</p>
+              <div className="flex justify-center items-center mb-4">
+                <p className="text-center">
+                  Sua denúncia será enviada anonimamente.
+                </p>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="flex flex-col gap-2 mt-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="declared"
+                    // checked={isAnonymous}
+                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
+                  />
+                  <Label htmlFor="declared">
+                    Declaro que todas as informações fornecidas neste formulário
+                    são verdadeiras e precisas ao meu conhecimento
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="understand"
+                    // checked={isAnonymous}
+                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
+                  />
+                  <Label htmlFor="understand">
+                    Compreendo que as autoridades competentes podem entrar em
+                    contato comigo para obter mais detalhes sobre a denúncia, se
+                    necessário.
+                  </Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="agreed"
+                    // checked={isAnonymous}
+                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
+                  />
+                  <Label htmlFor="agreed">
+                    Concordo que as evidências fornecidas (fotos, vídeos,
+                    documentos) podem ser utilizadas pelas autoridades para
+                    investigação e possíveis ações legais.
+                  </Label>
+                </div>
               </div>
             )}
           </form>
@@ -166,14 +255,19 @@ export default function Occurrence() {
               Voltar
             </Button>
           )}
-          {step === 1 && (
-            <Button onClick={handleNextStep}>Próximo</Button>
-          )}
+          {step === 1 && <Button onClick={handleNextStep}>Próximo</Button>}
           {step === 2 && (
-            <Button disabled={isImageLoading} onClick={() => toast({
-              title: "Enviado!",
-              description: "Sua denúncia foi enviada com sucesso!",
-            })}>Enviar</Button>
+            <Button
+              disabled={isImageLoading}
+              onClick={() =>
+                toast({
+                  title: "Enviado!",
+                  description: "Sua denúncia foi enviada com sucesso!",
+                })
+              }
+            >
+              Enviar
+            </Button>
           )}
         </CardFooter>
         {imageSelected && (

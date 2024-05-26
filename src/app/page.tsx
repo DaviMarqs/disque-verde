@@ -9,7 +9,7 @@ export default function Home() {
     <main className="flex min-h-screen w-full flex-col items-center p-24 mx-auto bg-green-700 justify-center relative">
       <div className="flex flex-col items-center gap-4">
         <Image
-          src="/disque_verde_logo.svg"
+          src="/disque_verde_splash.svg"
           alt="Logo Disque Verde"
           className="dark:invert"
           width={380}

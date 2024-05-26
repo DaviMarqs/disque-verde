@@ -27,19 +27,19 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="fixed bottom-0 w-full flex items-center justify-center p-4 bg-green-700 gap-4 mb-8">
-        <Image
-          src="/prefeitura_logo.png"
-          alt="Logo Prefeitura"
-          className="dark:invert"
-          width={220}
-          height={24}
-        />
+      <div className="fixed bottom-0 w-full flex flex-col md:flex-row items-center justify-center p-4 bg-green-700 gap-4 mb-8">
         <Image
           src="/secretaria_meio_amb_logo.png"
           alt="Logo Prefeitura"
           className="dark:invert"
-          width={200}
+          width={100}
+          height={24}
+        />
+        <Image
+          src="/prefeitura_logo.png"
+          alt="Logo Prefeitura"
+          className="dark:invert"
+          width={120}
           height={24}
         />
       </div>

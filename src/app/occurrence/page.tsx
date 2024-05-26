@@ -29,12 +29,13 @@ export default function Occurrence() {
     { value: "TRASH", label: "Lixo em lugar inapropriado" },
     { value: "VANDALISM", label: "Vandalismo Ambiental" },
     { value: "INVASION", label: "Invasão" },
+    { value: "OTHER", label: "Outros" },
   ];
 
   const [imageSelected, setImageSelected] = useState("");
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [step, setStep] = useState(1);
-  const [isAnonymous, setIsAnonymous] = useState(true);
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const { toast } = useToast()
 
   function convertToBase64(file: Blob): Promise<string | ArrayBuffer | null> {

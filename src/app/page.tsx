@@ -32,14 +32,14 @@ export default function Home() {
           src="/secretaria_meio_amb_logo.png"
           alt="Logo Prefeitura"
           className="dark:invert"
-          width={100}
+          width={140}
           height={24}
         />
         <Image
           src="/prefeitura_logo.png"
           alt="Logo Prefeitura"
           className="dark:invert"
-          width={120}
+          width={160}
           height={24}
         />
       </div>

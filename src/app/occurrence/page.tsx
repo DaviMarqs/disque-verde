@@ -120,6 +120,16 @@ export default function Occurrence() {
                       placeholder="Digite o horário da ocorrência"
                     />
                   </div>
+
+                  <div className="flex flex-col space-y-1.5 w-[280px]">
+                    <Label htmlFor="occurrence_location">
+                      Local da ocorrência
+                    </Label>
+                    <Input
+                      id="occurrence_location"
+                      placeholder="Informe o local da ocorrência"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col space-y-1.5">
@@ -150,24 +160,15 @@ export default function Occurrence() {
                     id="anonymous"
                     defaultValue="option-one"
                     className="flex"
+                    onValueChange={(value) => setIsAnonymous(value === "option-two")}
                   >
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="option-one" id="option-one" />
-                      <Label
-                        htmlFor="option-one"
-                        onClick={() => setIsAnonymous(false)}
-                      >
-                        Sim
-                      </Label>
+                      <Label htmlFor="option-one">Sim</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                       <RadioGroupItem value="option-two" id="option-two" />
-                      <Label
-                        htmlFor="option-two"
-                        onClick={() => setIsAnonymous(true)}
-                      >
-                        Não
-                      </Label>
+                      <Label htmlFor="option-two">Não</Label>
                     </div>
                   </RadioGroup>
                 </div>
@@ -211,8 +212,6 @@ export default function Occurrence() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="declared"
-                    // checked={isAnonymous}
-                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
                   />
                   <Label htmlFor="declared">
                     Declaro que todas as informações fornecidas neste formulário
@@ -223,8 +222,6 @@ export default function Occurrence() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="understand"
-                    // checked={isAnonymous}
-                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
                   />
                   <Label htmlFor="understand">
                     Compreendo que as autoridades competentes podem entrar em
@@ -236,13 +233,11 @@ export default function Occurrence() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="agreed"
-                    // checked={isAnonymous}
-                    // onCheckedChange={() => setIsAnonymous(!isAnonymous)}
                   />
                   <Label htmlFor="agreed">
-                    Concordo que as evidências fornecidas (fotos, vídeos,
-                    documentos) podem ser utilizadas pelas autoridades para
-                    investigação e possíveis ações legais.
+                    Concordo que as evidências fornecidas podem ser utilizadas
+                    pelas autoridades para investigação e possíveis ações
+                    legais.
                   </Label>
                 </div>
               </div>

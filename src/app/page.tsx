@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen w-full flex-col items-center p-24 mx-auto bg-green-700 justify-center">
+    <main className="flex min-h-screen w-full flex-col items-center p-24 mx-auto bg-green-700 justify-center relative">
       <div className="flex flex-col items-center gap-4">
         <Image
           src="/disque_verde_logo.svg"
@@ -21,10 +21,27 @@ export default function Home() {
         </p>
 
         <Link href="/occurrence">
-          <Button className="w-full bg-slate-100 text-slate-900 hover:bg-green-800 hover:text-slate-100 hover:shadow hover:animate-pulse">
+          <Button className="w-full font-medium bg-slate-100 text-slate-900 hover:bg-green-800 hover:text-slate-100 hover:shadow hover:animate-pulse">
             Faça sua denúncia aqui!
           </Button>
         </Link>
+      </div>
+
+      <div className="fixed bottom-0 w-full flex items-center justify-center p-4 bg-green-700 gap-4 mb-8">
+        <Image
+          src="/prefeitura_logo.png"
+          alt="Logo Prefeitura"
+          className="dark:invert"
+          width={220}
+          height={24}
+        />
+        <Image
+          src="/secretaria_meio_amb_logo.png"
+          alt="Logo Prefeitura"
+          className="dark:invert"
+          width={200}
+          height={24}
+        />
       </div>
     </main>
   );

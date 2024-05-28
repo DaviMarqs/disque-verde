@@ -104,13 +104,20 @@ export default function Occurrence() {
     }));
   };
 
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      occurrence_date: date?.toISOString().slice(0, 10) || "",
-    }));
-  }, [date]);
-
+  const allInputsFilled = () => {
+    if (formData.informer_anonymous) {
+      return (
+        formData.description !== "" &&
+        formData.occurrence_type !== "" &&
+        formData.occurrence_date !== "" &&
+        formData.occurrence_time !== "" &&
+        formData.occurrence_location !== "" &&
+        imageSelected !== ""
+      );
+    } else {
+      return Object.values(formData).every((value) => value !== "");
+    }
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
@@ -124,7 +131,15 @@ export default function Occurrence() {
       });
       return;
     }
-  
+
+    if (!allInputsFilled()) {
+      toast({
+        title: "Erro!",
+        description: "Por favor, preencha todos os campos.",
+      });
+      return;
+    }
+
     setIsFormLoading(true);
 
     formData.image = imageSelected;
@@ -148,9 +163,17 @@ export default function Occurrence() {
       toast({
         title: "Erro!",
         description: "Ocorreu um erro ao enviar sua denúncia.",
+        variant: "destructive",
       });
     }
   };
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      occurrence_date: date?.toISOString().slice(0, 10) || "",
+    }));
+  }, [date]);
 
   return (
     <div className="flex min-h-screen justify-center items-center bg-green-700">

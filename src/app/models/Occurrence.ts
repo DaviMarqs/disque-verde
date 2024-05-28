@@ -13,6 +13,7 @@ const OccurrenceSchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      required: true,
     },
     status: {
       type: String,
@@ -36,12 +37,15 @@ const OccurrenceSchema = new mongoose.Schema(
     },
     occurrence_date: {
       type: Date,
+      required: true,
     },
     occurrence_time:{
       type: String,
+      required: true,
     },
     occurrence_location: {
       type: String,
+      required: true,
     },
   },
   {

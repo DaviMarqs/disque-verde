@@ -25,19 +25,15 @@ export async function POST(req: Request) {
     const newOccurrence = new Occurrence({
       description: data.description,
       occurrence_type: data.occurrence_type,
-      image: data.image,
+      occurrence_date: data.occurrence_date,
+      occurrence_time: data.occurrence_time,
       status: data.status || "PENDING",
       informer_name: data.informer_name,
       informer_email: data.informer_email,
       informer_phone: data.informer_phone,
       informer_address: data.informer_address,
       informer_anonymous: data.informer_anonymous,
-      offender_name: data.offender_name,
-      offender_email: data.offender_email,
-      offender_phone: data.offender_phone,
-      offender_address: data.offender_address,
-      occurrence_date_and_time: data.occurrence_date_and_time,
-      occurrence_location: data.occurrence_location,
+      image: data.image,
     });
 
     await newOccurrence.save();

@@ -8,7 +8,7 @@ const OccurrenceSchema = new mongoose.Schema(
     },
     occurrence_type: {
       type: String,
-      enum: ["BURNED", "TRASH", "VANDALISM", "INVASION"],
+      enum: ["BURNED", "TRASH", "VANDALISM", "INVASION", "OTHER"],
       required: true,
     },
     image: {

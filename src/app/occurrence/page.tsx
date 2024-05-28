@@ -121,7 +121,7 @@ export default function Occurrence() {
 
     formData.image = imageSelected;
 
-    const response = await fetch("http://localhost:3000/api/occurrences", {
+    const response = await fetch(`${process.env.API_SERVICE}/occurrences`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

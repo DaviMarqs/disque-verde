@@ -11,6 +11,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
+interface DatePickerProps {
+  date: Date | undefined;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
+}
+
 const months = [
   "janeiro",
   "fevereiro",
@@ -45,7 +50,7 @@ function formatDate(date: Date) {
   return `${dayOfWeek}, ${day} de ${month} de ${year}`;
 }
 
-export function DatePicker({ date, setDate }) {
+export function DatePicker({ date, setDate }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>

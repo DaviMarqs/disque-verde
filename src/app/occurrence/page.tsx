@@ -89,23 +89,29 @@ export default function Occurrence() {
     setStep((prevStep) => prevStep - 1);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const newValue =
+      type === "checkbox" && e.target instanceof HTMLInputElement
+        ? e.target.checked
+        : value;
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: newValue,
     }));
   };
 
   useEffect(() => {
     setFormData((prevData) => ({
       ...prevData,
-      occurrence_date: date,
+      occurrence_date: date?.toISOString().slice(0, 10) || "",
     }));
   }, [date]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsFormLoading(true);
     e.preventDefault();
     if (
       formData.informer_email &&
@@ -118,10 +124,12 @@ export default function Occurrence() {
       });
       return;
     }
+  
+    setIsFormLoading(true);
 
     formData.image = imageSelected;
 
-    const response = await fetch(`${process.env.API_SERVICE}/occurrences`, {
+    const response = await fetch(`api/occurrences`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -162,9 +170,7 @@ export default function Occurrence() {
                     rows={4}
                     placeholder="Para nos ajudar a entender melhor a situação, por favor, forneça uma descrição detalhada do ocorrido. Inclua o máximo de informações possível."
                     value={formData.description}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      handleChange(e)
-                    }
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
@@ -308,7 +314,7 @@ export default function Occurrence() {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="flex flex-col space-y-1.5">
+                <div className="flex flex-col space-y-1.5 mb-2">
                   <Label htmlFor="informer_email">E-mail</Label>
                   <Input
                     id="informer_email"
@@ -378,7 +384,10 @@ export default function Occurrence() {
               )}
               {step === 1 && <Button onClick={handleNextStep}>Próximo</Button>}
               {step === 2 && (
-                <Button type="submit" disabled={isImageLoading || isFormLoading}>
+                <Button
+                  type="submit"
+                  disabled={isImageLoading || isFormLoading}
+                >
                   Enviar
                 </Button>
               )}

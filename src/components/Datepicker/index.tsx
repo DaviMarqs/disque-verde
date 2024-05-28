@@ -1,25 +1,39 @@
-"use client"
+"use client";
 
-import { Calendar as CalendarIcon } from "lucide-react"
-import * as React from "react"
+import { Calendar as CalendarIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const months = [
-  "janeiro", "fevereiro", "março", "abril", "maio", "junho",
-  "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+  "janeiro",
+  "fevereiro",
+  "março",
+  "abril",
+  "maio",
+  "junho",
+  "julho",
+  "agosto",
+  "setembro",
+  "outubro",
+  "novembro",
+  "dezembro",
 ];
 
 const daysOfWeek = [
-  "domingo", "segunda-feira", "terça-feira", "quarta-feira",
-  "quinta-feira", "sexta-feira", "sábado"
+  "domingo",
+  "segunda-feira",
+  "terça-feira",
+  "quarta-feira",
+  "quinta-feira",
+  "sexta-feira",
+  "sábado",
 ];
 
 function formatDate(date: Date) {
@@ -27,13 +41,11 @@ function formatDate(date: Date) {
   const month = months[date.getMonth()];
   const year = date.getFullYear();
   const dayOfWeek = daysOfWeek[date.getDay()];
-  
+
   return `${dayOfWeek}, ${day} de ${month} de ${year}`;
 }
 
-export function DatePicker() {
-  const [date, setDate] = React.useState<Date>()
-
+export function DatePicker({ date, setDate }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -54,5 +66,5 @@ export function DatePicker() {
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

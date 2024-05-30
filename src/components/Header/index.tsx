@@ -25,6 +25,7 @@ export function Header() {
       router.push("/all-occurrences");
     }
   };
+
   return (
     <header className="bg-green-700 w-full h-1 flex justify-center">
       <div className="flex items-center gap-36 mt-6 md:space-x-80">

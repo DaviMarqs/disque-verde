@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/app/context/authContext";
 import { User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -14,6 +15,11 @@ import {
 export function Header() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
+
+  const handleLogin = () => {
+    login(username, password);
+  };
 
   return (
     <header className="bg-green-700 w-full h-1 flex justify-center">
@@ -50,7 +56,10 @@ export function Header() {
                       className="border p-1 rounded w-full mt-1"
                     />
                   </Label>
-                  <Button className="mt-2 px-3 py-1 bg-green-700 text-white rounded">
+                  <Button
+                    className="mt-2 px-3 py-1 bg-green-700 text-white rounded"
+                    onClick={handleLogin}
+                  >
                     Login
                   </Button>
                 </div>

@@ -23,46 +23,35 @@ import {
 interface Occurrence {
   id: string;
   description: string;
-  occurrence_type?: string;
+  occurrence_type: string;
   image?: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
   status: string;
 }
-
-const fakeData: Occurrence[] = [
-  {
-    id: "1",
-    description: "Queimada no centro da cidade",
-    occurrence_type: "BURNED",
-    image:
-      "https://unsplash.com/pt-br/fotografias/fogo-com-fumaca-preta-durante-a-noite-gyrrWzwqm5Y",
-    created_at: "2022-01-01T00:00:00.000Z",
-    updated_at: "2022-01-01T00:00:00.000Z",
-    status: "PENDING",
-  },
-  {
-    id: "2",
-    description: "Lixo na rua",
-    occurrence_type: "TRASH",
-    image:
-      "https://unsplash.com/pt-br/fotografias/fogo-com-fumaca-preta-durante-a-noite-gyrrWzwqm5Y",
-    created_at: "2023-01-01T00:00:00.000Z",
-    updated_at: "2023-01-01T00:00:00.000Z",
-    status: "CONCLUDED",
-  },
-];
-
 export default function OccurrencesTable() {
   const rowsPerPage = 5;
   const [data, setData] = useState<Occurrence[]>([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(rowsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalOccurrences, setTotalOccurrences] = useState(0);
 
   const getData = async () => {
     try {
-      console.log("Data:", fakeData);
-      setData(fakeData);
+      const response = await fetch(
+        `/api/occurrences?page=${currentPage}&limit=${rowsPerPage}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      setData(data.occurrences);
+      setTotalPages(data.pagination.totalPages);
+      setTotalOccurrences(data.pagination.totalOccurrences);
     } catch (error) {
       console.error("Erro ao buscar ocorrências: ", error);
     }
@@ -73,21 +62,39 @@ export default function OccurrencesTable() {
       case "PENDING":
         return <Clock color="orange" className="ml-2" />;
       case "CONCLUDED":
-        return <Check color="green" className="ml-2"/>;
+        return <Check color="green" className="ml-2" />;
       default:
         return status;
     }
   };
 
+  const translateType = (type: string) => {
+    switch (type) {
+      case "BURNED":
+        return "Queimada";
+      case "TRASH":
+        return "Lixo em lugar inapropriado";
+      case "VANDALISM":
+        return "Vandalismo Ambiental";
+      case "INVASION":
+        return "Invasão";
+      case "OTHER":
+        return "Outros";
+      default:
+        return type;
+    }
+  };
+
   useEffect(() => {
     getData();
-  }, []);
+  }, [currentPage]);
+
   return (
     <>
       <Table className="min-h-12" title="Todas as ocorrências">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Id</TableHead>
+            <TableHead className="w-[200px]">Tipo</TableHead>
             <TableHead>Descrição</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Criada em</TableHead>
@@ -95,33 +102,36 @@ export default function OccurrencesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item) => {
-            const limitedDescription =
-              item?.description.length > 20
-                ? `${item?.description.slice(0, 20)}...`
-                : item.description;
-            return (
-              <>
-                <TableRow>
-                  <TableCell className="text-left">{item.id}</TableCell>
-                  <TableCell className="text-left">
-                    {limitedDescription}
-                  </TableCell>
-                  <TableCell className="text-center">
-                    {formatStatus(item.status)}
-                  </TableCell>
-                  <TableCell className="text-left">
-                    {format(new Date(item.created_at), "dd/MM/yyyy HH:mm")}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="outline">
-                      <FolderOpen />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </>
-            );
-          })}
+          {data.length > 0 &&
+            data.map((item) => {
+              const limitedDescription =
+                item?.description.length > 20
+                  ? `${item?.description.slice(0, 20)}...`
+                  : item.description;
+              return (
+                <>
+                  <TableRow>
+                    <TableCell className="text-left w-[200px]">
+                      {translateType(item.occurrence_type)}
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {limitedDescription}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      {formatStatus(item.status)}
+                    </TableCell>
+                    <TableCell className="text-left">
+                      {format(new Date(item.createdAt), "dd/MM/yyyy HH:mm")}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button variant="outline">
+                        <FolderOpen />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </>
+              );
+            })}
         </TableBody>
       </Table>
       <Pagination>
@@ -130,23 +140,32 @@ export default function OccurrencesTable() {
             <PaginationPrevious
               title="Anterior"
               className={
-                startIndex === 0 ? "pointer-events-none opacity-50" : undefined
+                currentPage === 1 ? "pointer-events-none opacity-50" : undefined
               }
               onClick={() => {
-                setStartIndex(startIndex - rowsPerPage);
-                setEndIndex(endIndex - rowsPerPage);
+                setCurrentPage(currentPage - 1 < 1 ? 1 : currentPage - 1);
               }}
             />
           </PaginationItem>
 
           <PaginationItem>
+            <div className="w-full text-sm">
+              Página {currentPage} / {totalPages} - Total de Denúncias:{" "}
+              {totalOccurrences}
+            </div>
+          </PaginationItem>
+
+          <PaginationItem>
             <PaginationNext
               className={
-                endIndex === 100 ? "pointer-events-none opacity-50" : undefined
+                currentPage + 1 > totalPages
+                  ? "pointer-events-none opacity-50"
+                  : undefined
               }
               onClick={() => {
-                setStartIndex(startIndex + rowsPerPage);
-                setEndIndex(endIndex + rowsPerPage);
+                setCurrentPage(
+                  currentPage + 1 > totalPages ? totalPages : currentPage + 1
+                );
               }}
             />
           </PaginationItem>

@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@/app/context/authContext";
 import { User } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -16,14 +17,17 @@ export function Header() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const router = useRouter();
 
-  const handleLogin = () => {
-    login(username, password);
+  const handleLogin = async () => {
+    const isAuthenticated = await login(username, password);
+    if (isAuthenticated) {
+      router.push("/all-occurrences");
+    }
   };
-
   return (
     <header className="bg-green-700 w-full h-1 flex justify-center">
-      <div className="flex items-center mt-6 md:space-x-80">
+      <div className="flex items-center gap-36 mt-6 md:space-x-80">
         {/* <img src="/disque_verde_logo.svg" alt="Logo Disque Verde" className="dark:invert" /> */}
         <div>logo</div>
         <h1 className="text-sm font-bold text-white font-medium">

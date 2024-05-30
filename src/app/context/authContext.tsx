@@ -33,14 +33,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const login = (username: string, password: string): boolean => {
-    console.log(username, password);
-    console.log(process.env.NEXT_PUBLIC_USER_ADMIN_NAME, process.env.NEXT_PUBLIC_USER_ADMIN_PASSWORD, 'envs');
     if (
       username == process.env.NEXT_PUBLIC_USER_ADMIN_NAME &&
       password == process.env.NEXT_PUBLIC_USER_ADMIN_PASSWORD
     ) {
       setIsAuthenticated(true);
-      console.log('bateu aqui')
       toast({
         title: "Login efetuado com sucesso!",
         description: "Agora você pode ver a página de gerenciamento.",

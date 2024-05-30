@@ -118,7 +118,7 @@ export default function OccurrencesTable() {
                   : item.description;
               return (
                 <>
-                  <TableRow>
+                  <TableRow key={item.id}>
                     <TableCell className="text-left w-[200px]">
                       {translateType(item.occurrence_type)}
                     </TableCell>

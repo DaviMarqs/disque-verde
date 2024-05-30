@@ -9,8 +9,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
-    const id = searchParams.get("id"); // Novo parâmetro
-    console.log(id, "id");
+    const id = searchParams.get("id");
 
     if (id) {
       const occurrence = await Occurrence.findById(id);

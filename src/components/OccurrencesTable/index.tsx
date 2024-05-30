@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { Check, Clock, FolderOpen } from "lucide-react";
+import { Check, Clock, FolderOpen, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -35,9 +35,11 @@ export default function OccurrencesTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalOccurrences, setTotalOccurrences] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getData = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `/api/occurrences?page=${currentPage}&limit=${rowsPerPage}`,
         {
@@ -52,8 +54,10 @@ export default function OccurrencesTable() {
       setData(data.occurrences);
       setTotalPages(data.pagination.totalPages);
       setTotalOccurrences(data.pagination.totalOccurrences);
+      setIsLoading(false);
     } catch (error) {
       console.error("Erro ao buscar ocorrências: ", error);
+      setIsLoading(false);
     }
   };
 
@@ -89,7 +93,11 @@ export default function OccurrencesTable() {
     getData();
   }, [currentPage]);
 
-  return (
+  return isLoading ? (
+    <div className="flex min-h-12 justify-center flex-col">
+      <Loader2 className="m-auto animate-spin" />
+    </div>
+  ) : (
     <>
       <Table className="min-h-12" title="Todas as ocorrências">
         <TableHeader>

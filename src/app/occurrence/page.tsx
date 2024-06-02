@@ -111,8 +111,7 @@ export default function Occurrence() {
         formData.occurrence_type !== "" &&
         formData.occurrence_date !== "" &&
         formData.occurrence_time !== "" &&
-        formData.occurrence_location !== "" &&
-        imageSelected !== ""
+        formData.occurrence_location !== ""
       );
     } else {
       return Object.values(formData).every((value) => value !== "");
@@ -128,6 +127,14 @@ export default function Occurrence() {
       toast({
         title: "Erro!",
         description: "Por favor, insira um e-mail válido.",
+      });
+      return;
+    }
+
+    if (!imageSelected) {
+      toast({
+        title: "Erro!",
+        description: "Por favor, insira uma imagem.",
       });
       return;
     }

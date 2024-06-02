@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@/app/context/authContext";
 import { User } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -29,9 +30,16 @@ export function Header() {
   return (
     <header className="bg-green-700 w-full h-1 flex justify-center">
       <div className="flex items-center gap-36 mt-6 md:space-x-80">
-        {/* <img src="/disque_verde_logo.svg" alt="Logo Disque Verde" className="dark:invert" /> */}
-        <div>logo</div>
-        <h1 className="text-sm font-bold text-white font-medium">
+        <Image
+          src="/disque_verde.png"
+          alt="Logo Disque Verde"
+          className="dark:invert hover:cursor-pointer mt-2"
+          width={80}
+          height={80}
+          priority
+          onClick={() => router.push("/")}
+        />
+          <h1 className="text-sm font-sans text-white font-medium">
           Disque Verde
         </h1>
 

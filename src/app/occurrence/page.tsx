@@ -23,6 +23,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { CameraIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Occurrence() {
@@ -58,6 +59,7 @@ export default function Occurrence() {
   const [understandChecked, setUnderstandChecked] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   function convertToBase64(file: Blob): Promise<string | ArrayBuffer | null> {
     return new Promise((resolve, reject) => {
@@ -118,54 +120,59 @@ export default function Occurrence() {
     }
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (
-      formData.informer_email &&
-      !formData.informer_anonymous &&
-      !/\S+@\S+\.\S+/.test(formData.informer_email)
-    ) {
-      toast({
-        title: "Erro!",
-        description: "Por favor, insira um e-mail válido.",
+    try {
+      e.preventDefault();
+      if (
+        formData.informer_email &&
+        !formData.informer_anonymous &&
+        !/\S+@\S+\.\S+/.test(formData.informer_email)
+      ) {
+        toast({
+          title: "Erro!",
+          description: "Por favor, insira um e-mail válido.",
+        });
+        return;
+      }
+
+      if (!imageSelected) {
+        toast({
+          title: "Erro!",
+          description: "Por favor, insira uma imagem.",
+        });
+        return;
+      }
+
+      if (!allInputsFilled()) {
+        toast({
+          title: "Erro!",
+          description: "Por favor, preencha todos os campos.",
+        });
+        return;
+      }
+
+      setIsFormLoading(true);
+
+      formData.image = imageSelected;
+
+      const response = await fetch(`api/occurrences`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      return;
-    }
 
-    if (!imageSelected) {
-      toast({
-        title: "Erro!",
-        description: "Por favor, insira uma imagem.",
-      });
-      return;
-    }
+      setIsFormLoading(false);
+      if (response.ok) {
+        toast({
+          title: "Enviado!",
+          description: "Sua denúncia foi enviada com sucesso!",
+        });
+      }
 
-    if (!allInputsFilled()) {
-      toast({
-        title: "Erro!",
-        description: "Por favor, preencha todos os campos.",
-      });
-      return;
-    }
-
-    setIsFormLoading(true);
-
-    formData.image = imageSelected;
-
-    const response = await fetch(`api/occurrences`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    setIsFormLoading(false);
-    if (response.ok) {
-      toast({
-        title: "Enviado!",
-        description: "Sua denúncia foi enviada com sucesso!",
-      });
-    } else {
+      router.push("/thank-you");
+    } catch (error) {
+      console.error(error);
       setIsFormLoading(false);
       toast({
         title: "Erro!",

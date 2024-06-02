@@ -33,7 +33,7 @@ export function Header() {
         <Image
           src="/disque_verde.png"
           alt="Logo Disque Verde"
-          className="dark:invert hover:cursor-pointer mt-2"
+          className="dark:invert hover:cursor-pointer pt-2"
           width={80}
           height={80}
           priority

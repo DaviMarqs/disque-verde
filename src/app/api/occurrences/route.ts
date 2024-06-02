@@ -55,6 +55,7 @@ export async function POST(req: Request) {
       occurrence_type: data.occurrence_type,
       occurrence_date: data.occurrence_date,
       occurrence_time: data.occurrence_time,
+      occurrence_location: data.occurrence_location,
       status: data.status || "PENDING",
       informer_name: data.informer_name,
       informer_email: data.informer_email,
@@ -74,6 +75,52 @@ export async function POST(req: Request) {
     console.error("Error creating occurrence:", error);
     return NextResponse.json(
       { message: "Error creating occurrence", error },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    await dbConnect();
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "Occurrence ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const occurrenceToChangeStatus = await Occurrence.findById(id);
+
+    if (!occurrenceToChangeStatus) {
+      return NextResponse.json(
+        { message: "Denúncia não encontrada" },
+        { status: 400 }
+      );
+    }
+
+    if (occurrenceToChangeStatus.status === "PENDING") {
+      occurrenceToChangeStatus.status = "CONCLUDED";
+    } else if (occurrenceToChangeStatus.status === "CONCLUDED") {
+      occurrenceToChangeStatus.status = "PENDING";
+    }
+
+    await occurrenceToChangeStatus.save();
+    return NextResponse.json({
+      message: "Status da denúncia alterado com sucesso!",
+      occurrence: {
+        _id: occurrenceToChangeStatus._id,
+        status: occurrenceToChangeStatus.status,
+        description: occurrenceToChangeStatus.description,
+      },
+    });
+  } catch (error) {
+    console.error("Error changing occurrence status:", error);
+    return NextResponse.json(
+      { message: "Error changing occurrence status", error },
       { status: 500 }
     );
   }

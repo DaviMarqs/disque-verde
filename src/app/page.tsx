@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center p-24 mx-auto bg-green-700 justify-center relative">
-      <div className="flex flex-1 flex-col items-center gap-4 mt-4">
+      <div className="flex flex-1 flex-col items-center gap-4 mt-20 mb-8 lg:mt-16">
         <Image
           src="/disque_verde_splash.svg"
           alt="Logo Disque Verde"

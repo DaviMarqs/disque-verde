@@ -4,16 +4,24 @@ import { format } from "date-fns";
 import { Check, Clock } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "../ui/dialog";
 import { toast } from "../ui/use-toast";
 
 interface InfosModalProps {
   occurrenceId: string;
+  setIsModalOpen: (value: boolean) => void;
+  getAllOccurrences: () => void;
+  deleteOccurrence: () => void;
+  loadingDelete: boolean;
+  changeOccurrenceStatus: () => void;
+  loadingStatus: boolean;
 }
 
 interface Occurrence {
@@ -58,7 +66,13 @@ const fieldTranslations = [
   { field: "updatedAt", translation: "Atualizada em", format: "formatDate" },
 ];
 
-export default function InfosModal({ occurrenceId }: InfosModalProps) {
+export default function InfosModal({
+  occurrenceId,
+  deleteOccurrence,
+  changeOccurrenceStatus,
+  loadingDelete,
+  loadingStatus,
+}: InfosModalProps) {
   const [occurrence, setOccurrence] = useState({} as Occurrence);
 
   const formatStatus = (status: string) => {
@@ -93,8 +107,6 @@ export default function InfosModal({ occurrenceId }: InfosModalProps) {
 
   const formatDate = (date: string) =>
     format(new Date(date), "dd/MM/yyyy HH:mm");
-
-  const translateAnonymous = (value: boolean) => (value ? "Sim" : "Não");
 
   const getData = async () => {
     if (!occurrenceId) return;
@@ -140,7 +152,6 @@ export default function InfosModal({ occurrenceId }: InfosModalProps) {
           {fieldTranslations.map(({ field, translation, format }) => {
             const fieldValue = occurrence[field as keyof Occurrence];
 
-
             if (
               !fieldValue ||
               field === "image" ||
@@ -167,6 +178,18 @@ export default function InfosModal({ occurrenceId }: InfosModalProps) {
           })}
         </div>
       </DialogHeader>
+      <DialogFooter>
+        <Button variant="outline" disabled={loadingStatus} onClick={() => changeOccurrenceStatus()}>
+          Alterar Status
+        </Button>
+        <Button
+          variant="destructive"
+          disabled={loadingDelete || loadingStatus}
+          onClick={() => deleteOccurrence()}
+        >
+          Excluir denuncia
+        </Button>
+      </DialogFooter>
     </DialogContent>
   );
 }

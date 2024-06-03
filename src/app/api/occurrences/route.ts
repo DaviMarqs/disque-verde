@@ -24,7 +24,12 @@ export async function GET(req: Request) {
       const skip = (page - 1) * limit;
 
       const totalOccurrences = await Occurrence.countDocuments({});
-      const occurrences = await Occurrence.find({}).skip(skip).limit(limit);
+      const occurrences = await Occurrence.find({})
+        .sort({
+          createdAt: -1,
+        })
+        .skip(skip)
+        .limit(limit);
 
       return NextResponse.json({
         occurrences,

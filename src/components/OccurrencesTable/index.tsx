@@ -21,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import { toast } from "../ui/use-toast";
 
 interface Occurrence {
   _id: string;
@@ -42,6 +43,8 @@ export default function OccurrencesTable() {
   const [selectedOccurrenceId, setSelectedOccurrenceId] = useState<
     string | null
   >(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getData = async () => {
@@ -93,6 +96,77 @@ export default function OccurrencesTable() {
         return "Outros";
       default:
         return type;
+    }
+  };
+
+  const deleteOccurrence = async () => {
+    if (!selectedOccurrenceId) return;
+
+    setLoadingDelete(true);
+    try {
+      const response = await fetch(
+        `/api/occurrences?id=${selectedOccurrenceId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await response.json();
+
+      toast({
+        title: "Ocorrência excluída com sucesso",
+        description: "A ocorrência foi excluída com sucesso",
+        variant: "destructive",
+      });
+
+      setLoadingDelete(false);
+      setIsModalOpen(false);
+      setSelectedOccurrenceId(null);
+      getData();
+    } catch (error) {
+      console.error("Erro ao excluir ocorrência: ", error);
+      setLoadingDelete(false);
+      setIsModalOpen(false);
+      setSelectedOccurrenceId(null);
+      toast({
+        title: "Erro ao excluir ocorrência",
+        description: "Ocorreu um erro ao excluir a ocorrência",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const changeOccurrenceStatus = async () => {
+    if (!selectedOccurrenceId) return;
+
+    setLoadingStatus(true);
+    try {
+      const response = await fetch(
+        `/api/occurrences?id=${selectedOccurrenceId}`,
+        {
+          method: "PATCH",
+        }
+      );
+      const data = await response.json();
+
+      toast({
+        title: "Status alterado com sucesso",
+        description: "O status da ocorrência foi alterado com sucesso",
+      });
+
+      setLoadingStatus(false);
+      setIsModalOpen(false);
+      setSelectedOccurrenceId(null);
+      getData();
+    } catch (error) {
+      console.error("Erro ao altera o status da ocorrência: ", error);
+      setLoadingStatus(false);
+      setIsModalOpen(false);
+      setSelectedOccurrenceId(null);
+      toast({
+        title: "Erro ao alterar o status da ocorrência",
+        description: "Ocorreu um erro ao alterar o status da ocorrência",
+        variant: "destructive",
+      });
     }
   };
 
@@ -194,7 +268,15 @@ export default function OccurrencesTable() {
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         {selectedOccurrenceId && (
-          <InfosModal occurrenceId={selectedOccurrenceId} />
+          <InfosModal
+            occurrenceId={selectedOccurrenceId}
+            setIsModalOpen={setIsModalOpen}
+            getAllOccurrences={getData}
+            deleteOccurrence={deleteOccurrence}
+            changeOccurrenceStatus={changeOccurrenceStatus}
+            loadingDelete={loadingDelete}
+            loadingStatus={loadingStatus}
+          />
         )}
       </Dialog>
     </>

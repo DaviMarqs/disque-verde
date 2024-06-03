@@ -41,10 +41,10 @@ export function Header() {
             onClick={() => router.push("/")}
           />
         </div>
-        <h1 className="text-sm font-sans text-white font-medium mr-4">
+        <h1 className="text-sm font-sans text-white font-medium ml-12">
           Disque Verde
         </h1>
-        <div>
+        <div className="flex items-center gap-8">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -80,6 +80,9 @@ export function Header() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+          <Button variant="outline" className="w-16 text-white bg-transparent rounded-lg" onClick={() => router.push("/about")}>
+            Sobre
+          </Button>
         </div>
       </div>
     </header>

@@ -116,9 +116,20 @@ export default function Occurrence() {
         formData.occurrence_location !== ""
       );
     } else {
-      return Object.values(formData).every((value) => value !== "");
+      return (
+        formData.description !== "" &&
+        formData.occurrence_type !== "" &&
+        formData.occurrence_date !== "" &&
+        formData.occurrence_time !== "" &&
+        formData.occurrence_location !== "" &&
+        formData.informer_name !== "" &&
+        formData.informer_email !== "" &&
+        formData.informer_phone !== "" &&
+        formData.informer_address !== ""
+      );
     }
   };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();

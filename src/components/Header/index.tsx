@@ -29,20 +29,21 @@ export function Header() {
 
   return (
     <header className="bg-green-700 w-full h-1 flex justify-center">
-      <div className="flex items-center gap-36 mt-6 md:space-x-80">
-        <Image
-          src="/disque_verde.png"
-          alt="Logo Disque Verde"
-          className="dark:invert hover:cursor-pointer pt-2"
-          width={80}
-          height={80}
-          priority
-          onClick={() => router.push("/")}
-        />
-          <h1 className="text-sm font-sans text-white font-medium">
+      <div className="flex items-center justify-between max-w-screen-lg mx-auto p-6 w-full">
+        <div className="flex items-center">
+          <Image
+            src="/logo.svg"
+            alt="Logo Disque Verde"
+            className="dark:invert hover:cursor-pointer pt-2"
+            width={50}
+            height={50}
+            priority
+            onClick={() => router.push("/")}
+          />
+        </div>
+        <h1 className="text-sm font-sans text-white font-medium mr-4">
           Disque Verde
         </h1>
-
         <div>
           <TooltipProvider>
             <Tooltip>

@@ -27,7 +27,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-center p-4 bg-green-700 gap-4 mb-2">
+      <div className="flex flex-col md:flex-row items-center justify-center p-4 bg-green-700 gap-4 mb-4">
         <Image
           src="/secretaria_meio_amb_logo.png"
           alt="Logo Prefeitura"

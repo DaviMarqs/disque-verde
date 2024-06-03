@@ -3,7 +3,9 @@
 import { format } from "date-fns";
 import { Check, Clock, FolderOpen, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import InfosModal from "../InfosModal";
 import { Button } from "../ui/button";
+import { Dialog } from "../ui/dialog";
 import {
   Pagination,
   PaginationContent,
@@ -21,7 +23,7 @@ import {
 } from "../ui/table";
 
 interface Occurrence {
-  id: string;
+  _id: string;
   description: string;
   occurrence_type: string;
   image?: string;
@@ -29,6 +31,7 @@ interface Occurrence {
   updatedAt: string;
   status: string;
 }
+
 export default function OccurrencesTable() {
   const rowsPerPage = 5;
   const [data, setData] = useState<Occurrence[]>([]);
@@ -36,6 +39,10 @@ export default function OccurrencesTable() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalOccurrences, setTotalOccurrences] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedOccurrenceId, setSelectedOccurrenceId] = useState<
+    string | null
+  >(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getData = async () => {
     try {
@@ -117,31 +124,36 @@ export default function OccurrencesTable() {
                   ? `${item?.description.slice(0, 20)}...`
                   : item.description;
               return (
-                <>
-                  <TableRow key={item.id}>
-                    <TableCell className="text-left w-[200px]">
-                      {translateType(item.occurrence_type)}
-                    </TableCell>
-                    <TableCell className="text-left">
-                      {limitedDescription}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {formatStatus(item.status)}
-                    </TableCell>
-                    <TableCell className="text-left">
-                      {format(new Date(item.createdAt), "dd/MM/yyyy HH:mm")}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline">
-                        <FolderOpen />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </>
+                <TableRow key={item._id}>
+                  <TableCell className="text-left w-[200px]">
+                    {translateType(item.occurrence_type)}
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {limitedDescription}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {formatStatus(item.status)}
+                  </TableCell>
+                  <TableCell className="text-left">
+                    {format(new Date(item.createdAt), "dd/MM/yyyy HH:mm")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedOccurrenceId(item._id);
+                        setIsModalOpen(true);
+                      }}
+                    >
+                      <FolderOpen />
+                    </Button>
+                  </TableCell>
+                </TableRow>
               );
             })}
         </TableBody>
       </Table>
+
       <Pagination>
         <PaginationContent>
           <PaginationItem>
@@ -179,6 +191,12 @@ export default function OccurrencesTable() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        {selectedOccurrenceId && (
+          <InfosModal occurrenceId={selectedOccurrenceId} />
+        )}
+      </Dialog>
     </>
   );
 }

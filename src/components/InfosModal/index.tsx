@@ -1,5 +1,6 @@
 "use client";
 
+import { handleTranslateOccurrenceType } from "@/app/utils/translate-occurrence-type";
 import { format } from "date-fns";
 import { Check, Clock } from "lucide-react";
 import Image from "next/image";
@@ -88,23 +89,6 @@ export default function InfosModal({
 
   const formatAnonymous = (value: string) => (value ? "Sim" : "Não");
 
-  const translateOccurrenceType = (type: string) => {
-    switch (type) {
-      case "BURNED":
-        return "Queimada";
-      case "TRASH":
-        return "Lixo";
-      case "VANDALISM":
-        return "Vandalismo";
-      case "INVASION":
-        return "Invasão";
-      case "OTHER":
-        return "Outro";
-      default:
-        return type;
-    }
-  };
-
   const formatDate = (date: string) =>
     format(new Date(date), "dd/MM/yyyy HH:mm");
 
@@ -165,7 +149,7 @@ export default function InfosModal({
               <p key={field}>
                 <span className="font-bold">{translation}:</span>{" "}
                 {format === "translateOccurrenceType"
-                  ? translateOccurrenceType(String(fieldValue))
+                  ? handleTranslateOccurrenceType(String(fieldValue))
                   : format === "formatDate" && typeof fieldValue === "string"
                   ? formatDate(fieldValue)
                   : format === "formatStatus"
@@ -179,7 +163,11 @@ export default function InfosModal({
         </div>
       </DialogHeader>
       <DialogFooter>
-        <Button variant="outline" disabled={loadingStatus} onClick={() => changeOccurrenceStatus()}>
+        <Button
+          variant="outline"
+          disabled={loadingStatus}
+          onClick={() => changeOccurrenceStatus()}
+        >
           Alterar Status
         </Button>
         <Button

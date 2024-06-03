@@ -29,11 +29,28 @@ import { useEffect, useState } from "react";
 
 export default function Occurrence() {
   const options = [
-    { value: "BURNED", label: "Queimada" },
-    { value: "TRASH", label: "Lixo em lugar inapropriado" },
-    { value: "VANDALISM", label: "Vandalismo Ambiental" },
-    { value: "INVASION", label: "Invasão" },
-    { value: "OTHER", label: "Outros" },
+    { value: "DEFORESTATION_BURNINGS", label: "Desmatamento e Queimadas" },
+    { value: "POLLUTION_AIR_WATER_SOIL", label: "Poluição - Ar, água ou solo" },
+    { value: "ILLEGAL_DUMPING", label: "Despejo ilegal" },
+    { value: "FLORA", label: "Flora" },
+    { value: "FAUNA", label: "Fauna" },
+    { value: "ANIMAL_ABUSE", label: "Maus-tratos animais" },
+    { value: "ILLEGAL_HUNTING", label: "Caça ilegal" },
+    { value: "ILLEGAL_TRADE", label: "Comércio ilegal" },
+    { value: "VEGETATION_DAMAGE", label: "Danos à Vegetação" },
+    { value: "PROTECTED_AREAS", label: "Áreas Protegidas" },
+    { value: "APP_INVASION", label: "Invasão de APP" },
+    {
+      value: "ILLEGAL_ACTIVITIES_UC",
+      label: "Atividades ilegais em Unidades de Conservação",
+    },
+    { value: "WATER_RESOURCES", label: "Recursos Hídricos" },
+    { value: "CONTAMINATION", label: "Contaminação" },
+    { value: "ILLEGAL_CONSTRUCTIONS", label: "Construções irregulares" },
+    { value: "PESTICIDE_USE", label: "Uso de Agrotóxicos" },
+    { value: "NOISE_DISTURBANCE", label: "Ruído e Perturbação" },
+    { value: "NOISE_POLLUTION", label: "Poluição sonora" },
+    { value: "OTHERS", label: "Outros" },
   ];
 
   const [formData, setFormData] = useState({

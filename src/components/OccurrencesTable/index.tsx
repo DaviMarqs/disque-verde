@@ -1,5 +1,6 @@
 "use client";
 
+import { handleTranslateOccurrenceType } from "@/app/utils/translate-occurrence-type";
 import { format } from "date-fns";
 import { Check, Clock, FolderOpen, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -79,23 +80,6 @@ export default function OccurrencesTable() {
         return <Check color="green" className="ml-2" />;
       default:
         return status;
-    }
-  };
-
-  const translateType = (type: string) => {
-    switch (type) {
-      case "BURNED":
-        return "Queimada";
-      case "TRASH":
-        return "Lixo em lugar inapropriado";
-      case "VANDALISM":
-        return "Vandalismo Ambiental";
-      case "INVASION":
-        return "Invasão";
-      case "OTHER":
-        return "Outros";
-      default:
-        return type;
     }
   };
 
@@ -200,7 +184,7 @@ export default function OccurrencesTable() {
               return (
                 <TableRow key={item._id}>
                   <TableCell className="text-left w-[200px]">
-                    {translateType(item.occurrence_type)}
+                    {handleTranslateOccurrenceType(item.occurrence_type)}
                   </TableCell>
                   <TableCell className="text-left">
                     {limitedDescription}

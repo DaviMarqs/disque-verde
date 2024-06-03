@@ -8,7 +8,27 @@ const OccurrenceSchema = new mongoose.Schema(
     },
     occurrence_type: {
       type: String,
-      enum: ["BURNED", "TRASH", "VANDALISM", "INVASION", "OTHER"],
+      enum: [
+        "DEFORESTATION_BURNINGS",
+        "POLLUTION_AIR_WATER_SOIL",
+        "ILLEGAL_DUMPING",
+        "FLORA",
+        "FAUNA",
+        "ANIMAL_ABUSE",
+        "ILLEGAL_HUNTING",
+        "ILLEGAL_TRADE",
+        "VEGETATION_DAMAGE",
+        "PROTECTED_AREAS",
+        "APP_INVASION",
+        "ILLEGAL_ACTIVITIES_UC",
+        "WATER_RESOURCES",
+        "CONTAMINATION",
+        "ILLEGAL_CONSTRUCTIONS",
+        "PESTICIDE_USE",
+        "NOISE_DISTURBANCE",
+        "NOISE_POLLUTION",
+        "OTHERS",
+      ],
       required: true,
     },
     image: {
@@ -39,7 +59,7 @@ const OccurrenceSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    occurrence_time:{
+    occurrence_time: {
       type: String,
       required: true,
     },

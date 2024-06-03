@@ -411,7 +411,9 @@ export default function Occurrence() {
                     <Checkbox
                       id="declared"
                       name="declared"
-                      onChange={() => setDeclaredChecked(!declaredChecked)}
+                      onCheckedChange={() =>
+                        setDeclaredChecked(!declaredChecked)
+                      }
                     />
                     <Label htmlFor="declared">
                       Declaro que todas as informações fornecidas neste
@@ -423,7 +425,9 @@ export default function Occurrence() {
                     <Checkbox
                       id="understand"
                       name="understand"
-                      onChange={() => setUnderstandChecked(!understandChecked)}
+                      onCheckedChange={() =>
+                        setUnderstandChecked(!understandChecked)
+                      }
                     />
                     <Label htmlFor="understand">
                       Compreendo que as autoridades competentes podem entrar em
@@ -436,7 +440,7 @@ export default function Occurrence() {
                     <Checkbox
                       id="agreed"
                       name="agreed"
-                      onChange={() => setAgreedChecked(!agreedChecked)}
+                      onCheckedChange={() => setAgreedChecked(!agreedChecked)}
                     />
                     <Label htmlFor="agreed">
                       Concordo que as evidências fornecidas podem ser utilizadas
@@ -458,7 +462,13 @@ export default function Occurrence() {
                 {step === 2 && (
                   <Button
                     type="submit"
-                    disabled={isImageLoading || isFormLoading}
+                    disabled={
+                      isImageLoading ||
+                      isFormLoading ||
+                      !declaredChecked ||
+                      !agreedChecked ||
+                      !understandChecked
+                    }
                   >
                     Enviar
                   </Button>

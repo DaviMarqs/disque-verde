@@ -183,6 +183,13 @@ export default function Occurrence() {
 
       formData.image = imageSelected;
 
+      if (formData.informer_anonymous) {
+        formData.informer_name = "Anônimo";
+        formData.informer_email = "Anônimo";
+        formData.informer_phone = "Anônimo";
+        formData.informer_address = "Anônimo";
+      }
+
       const response = await fetch(`api/occurrences`, {
         method: "POST",
         headers: {
@@ -318,37 +325,6 @@ export default function Occurrence() {
                       />
                     </div>
                   </div>
-
-                  <div className="flex flex-col space-x-2 gap-2">
-                    <Label htmlFor="anonymous">
-                      Você deseja se identificar ao realizar esta denúncia?
-                    </Label>
-
-                    <RadioGroup
-                      id="anonymous"
-                      value={
-                        formData.informer_anonymous
-                          ? "option-two"
-                          : "option-one"
-                      }
-                      className="flex"
-                      onValueChange={(value) =>
-                        setFormData((prevData) => ({
-                          ...prevData,
-                          informer_anonymous: value === "option-two",
-                        }))
-                      }
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Label htmlFor="option-one">Sim</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Label htmlFor="option-two">Não</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
                 </div>
               )}
 
@@ -393,6 +369,37 @@ export default function Occurrence() {
                       value={formData.informer_email}
                       onChange={handleChange}
                     />
+                  </div>
+
+                  <div className="flex flex-col space-x-2 gap-2 mb-2">
+                    <Label htmlFor="anonymous">
+                      Você deseja se identificar ao realizar esta denúncia?
+                    </Label>
+
+                    <RadioGroup
+                      id="anonymous"
+                      value={
+                        formData.informer_anonymous
+                          ? "option-two"
+                          : "option-one"
+                      }
+                      className="flex"
+                      onValueChange={(value) =>
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          informer_anonymous: value === "option-two",
+                        }))
+                      }
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="option-one" id="option-one" />
+                        <Label htmlFor="option-one">Sim</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="option-two" id="option-two" />
+                        <Label htmlFor="option-two">Não</Label>
+                      </div>
+                    </RadioGroup>
                   </div>
                 </div>
               )}

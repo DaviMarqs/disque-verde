@@ -107,6 +107,9 @@ export default function Occurrence() {
 
   const handlePrevStep = () => {
     setStep((prevStep) => prevStep - 1);
+    setAgreedChecked(false);
+    setDeclaredChecked(false);
+    setUnderstandChecked(false);
   };
 
   const handleChange = (

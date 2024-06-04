@@ -370,37 +370,6 @@ export default function Occurrence() {
                       onChange={handleChange}
                     />
                   </div>
-
-                  <div className="flex flex-col space-x-2 gap-2 mb-2">
-                    <Label htmlFor="anonymous">
-                      Você deseja se identificar ao realizar esta denúncia?
-                    </Label>
-
-                    <RadioGroup
-                      id="anonymous"
-                      value={
-                        formData.informer_anonymous
-                          ? "option-two"
-                          : "option-one"
-                      }
-                      className="flex"
-                      onValueChange={(value) =>
-                        setFormData((prevData) => ({
-                          ...prevData,
-                          informer_anonymous: value === "option-two",
-                        }))
-                      }
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-one" id="option-one" />
-                        <Label htmlFor="option-one">Sim</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="option-two" id="option-two" />
-                        <Label htmlFor="option-two">Não</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
                 </div>
               )}
 
@@ -409,6 +378,37 @@ export default function Occurrence() {
                   <p className="text-center">
                     Sua denúncia será enviada anonimamente.
                   </p>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="flex flex-col space-x-2 gap-2 mb-4">
+                  <Label htmlFor="anonymous">
+                    Você deseja se identificar ao realizar esta denúncia?
+                  </Label>
+
+                  <RadioGroup
+                    id="anonymous"
+                    value={
+                      formData.informer_anonymous ? "option-two" : "option-one"
+                    }
+                    className="flex"
+                    onValueChange={(value) =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        informer_anonymous: value === "option-two",
+                      }))
+                    }
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="option-one" id="option-one" />
+                      <Label htmlFor="option-one">Sim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="option-two" id="option-two" />
+                      <Label htmlFor="option-two">Não</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               )}
 

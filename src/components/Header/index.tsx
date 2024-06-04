@@ -80,7 +80,7 @@ export function Header() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Button variant="outline" className="w-16 text-white bg-transparent rounded-lg" onClick={() => router.push("/about")}>
+          <Button variant="ghost" className="w-16 text-white bg-transparent rounded-lg" onClick={() => router.push("/about")}>
             Sobre
           </Button>
         </div>

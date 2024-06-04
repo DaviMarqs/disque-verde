@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className="flex min-h-screen justify-center flex-col bg-green-700">
       <Header />
-      <div className="w-10/12 lg:w-2/4 p-4 rounded-lg bg-slate-100 m-auto font-serif">
+      <div className="w-10/12 lg:w-2/4 p-4 rounded-lg bg-slate-100 m-auto font-serif mt-16 md:m-auto">
         <h1 className="text-2xl mb-4">Sobre</h1>
         <p className="mb-4">
           Nosso objetivo é promover a proteção ambiental e a sustentabilidade na

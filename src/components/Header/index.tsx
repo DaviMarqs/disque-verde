@@ -44,7 +44,14 @@ export function Header() {
         <h1 className="text-sm font-sans text-white font-medium ml-12">
           Disque Verde
         </h1>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            className="w-16 text-white bg-transparent rounded-lg"
+            onClick={() => router.push("/about")}
+          >
+            Sobre
+          </Button>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -80,9 +87,6 @@ export function Header() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <Button variant="ghost" className="w-16 text-white bg-transparent rounded-lg" onClick={() => router.push("/about")}>
-            Sobre
-          </Button>
         </div>
       </div>
     </header>

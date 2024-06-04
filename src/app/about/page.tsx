@@ -22,6 +22,29 @@ export default function About() {
           Explore nosso site para saber mais sobre como funciona o Disque Verde
           e registre a sua denúncia!
         </p>
+
+        <p className="mb-4">
+          Site idealizado por{" "}
+          <a
+            href="https://www.linkedin.com/in/flaviacrivellarifassis/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-700 font-bold"
+          >
+            {" "}
+            Flávia Crivellari Fassis
+          </a>
+          , Diretora de Meio Ambiente, e desenvolvido por{" "}
+          <a
+            href="https://www.linkedin.com/in/davi-aldivino-marques/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-700 font-bold"
+          >
+            Davi Marques
+          </a>
+          , Desenvolvedor de Software.
+        </p>
         <p className="mb-4 text-green-700 font-bold">
           {" "}
           Obrigado por contribuir para a proteção do nosso meio ambiente!
